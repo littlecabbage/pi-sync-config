@@ -1,0 +1,9 @@
+{
+  "name": "ask-user",
+  "private": true,
+  "description": "Local ask_user extension (replaces @eko24ive/pi-ask)",
+  "pi": {
+    "extensions": ["./index.ts"],
+    "skills": ["./skills"]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 2,
+  "branch": "main",
+  "root": "sync",
+  "include": [
+    "settings.json",
+    "AGENTS.md",
+    "SYSTEM.md",
+    "APPEND_SYSTEM.md",
+    "keybindings.json",
+    "extensions/**",
+    "skills/**",
+    "prompts/**",
+    "themes/**"
+  ],
+  "exclude": [
+    "**/.DS_Store",
+    "**/*.tmp",
+    "**/*.log",
+    "extensions/pi-sync/**",
+    "extensions/**/.cache/**",
+    "extensions/**/cache/**",
+    "extensions/**/coverage/**",
+    "extensions/**/logs/**",
+    "extensions/**/temp/**",
+    "extensions/**/tmp/**"
+  ],
+  "delete": "tracked",
+  "pullTimeoutMs": 10000,
+  "special": {
+    "settings.json": "settings"
+  }
+}

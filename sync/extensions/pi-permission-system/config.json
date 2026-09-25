@@ -1,0 +1,193 @@
+{
+  "$schema": "https://raw.githubusercontent.com/gotgenes/pi-packages/main/packages/pi-permission-system/schemas/permissions.schema.json",
+
+  // ---- 运行时开关 ----
+  "debugLog": false,
+  "permissionReviewLog": true,
+  "yoloMode": true,
+  "doublePressToConfirm": true,
+  "forwardingTimeoutMs": 600000,
+  "promptMaxRows": 24,
+  "promptFieldMaxWidth": 400,
+  "reviewLogFieldMaxWidth": 1000,
+
+  // ---- 权限策略 ----
+  "permission": {
+    // 全局兜底：未匹配的操作一律询问
+    "*": "ask",
+
+    // 跨所有工具的敏感路径保护（优先级最高，deny 不可被下方 allow 覆盖）
+    "path": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      ".env": "deny",
+      ".env.*": "deny",
+      "**/*.pem": "deny",
+      "**/*.key": "deny",
+      "**/*.p12": "deny",
+      "**/*.pfx": "deny",
+      "~/.ssh/**": "deny",
+      "~/.aws/**": "deny",
+      "~/.config/gh/**": "deny",
+      "~/.netrc": "deny",
+      "~/.npmrc": "deny",
+      "~/.git-credentials": "deny"
+    },
+    // 按读写方向细化：只读放行、写敏感区拦截
+    "path_write": {
+      "*": "allow",
+      "~/.ssh/*": "deny",
+      "~/.aws/*": "deny",
+      "**/.env*": "deny"
+    },
+
+    // 文件工具：读取放行，写入需要确认
+    "read": "allow",
+    "write": "ask",
+    "edit": "ask",
+
+    // bash 命令策略（fail-closed：解析失败的命令会转 ask）
+    "bash": {
+      // 日常开发命令：只读类直接放行
+      "ls *": "allow",
+      "ls": "allow",
+      "pwd": "allow",
+      "cat *": "allow",
+      "grep *": "allow",
+      "find *": "allow",
+      "head *": "allow",
+      "tail *": "allow",
+      "wc *": "allow",
+      "echo *": "allow",
+      "env": "allow",
+      "printenv *": "allow",
+      "date": "allow",
+      "whoami": "allow",
+      "uname *": "allow",
+      "df *": "allow",
+      "du *": "allow",
+      "file *": "allow",
+      "which *": "allow",
+      "type *": "allow",
+      "history": "allow",
+
+      // git 只读命令放行，写入类命令询问
+      "git status": "allow",
+      "git diff *": "allow",
+      "git log *": "allow",
+      "git show *": "allow",
+      "git branch *": "allow",
+      "git ls-files *": "allow",
+      "git remote -v": "allow",
+      "git *": "ask",
+
+      // 包管理：查询放行，安装/删除询问
+      "npm view *": "allow",
+      "npm search *": "allow",
+      "npm *": "ask",
+      "pnpm view *": "allow",
+      "pnpm search *": "allow",
+      "pnpm *": "ask",
+      "yarn *": "ask",
+      "pip show *": "allow",
+      "pip list": "allow",
+      "pip *": "ask",
+
+      // 测试/构建/检查：放行（但非交互模式注意超时）
+      "npm test *": "ask",
+      "npm run build *": "ask",
+      "node --check *": "allow",
+      "python3 -m py_compile *": "allow",
+      "python3 -m pytest *": "ask",
+      "python3 -m unittest *": "ask",
+      "go test *": "ask",
+      "cargo check *": "ask",
+      "cargo build *": "ask",
+      "cargo test *": "ask",
+
+      // 危险命令：一律拦截（可自定义拒绝理由）
+      "rm -rf *": { "action": "deny", "reason": "禁止递归强制删除，请先确认目标再单独删除" },
+      "rm -fr *": { "action": "deny", "reason": "禁止递归强制删除" },
+      "rm -r -f *": { "action": "deny", "reason": "禁止递归强制删除" },
+      "sudo *": "ask",
+      "mkfs *": { "action": "deny", "reason": "禁止格式化磁盘" },
+      "dd *": "ask",
+      "shutdown *": { "action": "deny", "reason": "禁止关机" },
+      "reboot": { "action": "deny", "reason": "禁止重启" },
+      "chmod -R *": "ask",
+      "chown *": "ask",
+      "git push *": "ask",
+      "git reset --hard *": "ask",
+      "git clean -f*": "ask",
+      "git checkout -f *": "ask",
+      "git rebase *": "ask",
+      "git stash drop *": "ask",
+      "git branch -D *": "ask",
+      "git tag -d *": "ask",
+
+      // 网络命令：放行只读查询
+      "curl -s *": "allow",
+      "curl -sS *": "allow",
+      "curl -I *": "allow",
+      "curl -i *": "ask",
+      "curl -X POST *": "ask",
+      "curl -X PUT *": "ask",
+      "curl -X DELETE *": "ask",
+      "curl -d *": "ask",
+      "curl *": "ask",
+      "wget -q *": "allow",
+      "wget *": "ask",
+      "ping *": "allow",
+      "nslookup *": "allow",
+      "dig *": "allow",
+      "nc -z *": "ask",
+      "ssh *": "ask",
+      "scp *": "ask",
+      "rsync *": "ask",
+      "tmux *": "ask",
+
+      // 进程管理：查询放行
+      "ps *": "allow",
+      "ps": "allow",
+      "top -b -n 1 *": "allow",
+      "kill *": "ask",
+      "killall *": "ask",
+      "pkill *": "ask",
+
+      // 文件操作：询问
+      "cp *": "ask",
+      "mv *": "ask",
+      "mkdir *": "ask",
+      "touch *": "ask",
+      "chmod *": "ask",
+      "ln -s *": "ask",
+      "tar *": "ask",
+      "zip *": "ask",
+      "unzip *": "ask",
+      "unrar *": "ask",
+
+      // 未匹配的其余命令：询问
+      "*": "ask"
+    },
+
+    // MCP 与 Skill：默认询问
+    "mcp": { "*": "ask" },
+    "skill": { "*": "ask" },
+
+    // 跨出当前工作目录：默认询问，常用缓存目录放行
+    "external_directory": {
+      "*": "ask",
+      "~/.cargo/registry/*": "allow",
+      "~/.cache/*": "allow",
+      "~/.npm/*": "allow",
+      "~/.pnpm-store/*": "allow",
+      "~/.local/share/pnpm/*": "allow",
+      "~/.config/*": "allow"
+    },
+    "external_directory_read": {
+      "~/*": "allow",
+      "/tmp/*": "allow"
+    }
+  }
+}
