@@ -23,7 +23,6 @@
     "openai-codex/gpt-6-sol",
     "openai-codex/gpt-6-astra",
     "xai/grok-4.7",
-    "antigravity/gemini-3.8-flash",
     "cannbot/deepseek-v4.1-flash",
     "cannbot/deepseek-v4-pro"
   ]
