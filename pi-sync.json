@@ -18,6 +18,7 @@
     "**/*.tmp",
     "**/*.log",
     "extensions/pi-sync/**",
+    "extensions/**/.git/**",
     "extensions/**/.cache/**",
     "extensions/**/cache/**",
     "extensions/**/coverage/**",
