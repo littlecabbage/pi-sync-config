@@ -1,16 +1,12 @@
 {
-  "theme": "claude-code-dark-daltonized",
+  "theme": "claude-code-dark-ansi",
   "defaultProvider": "cannbot",
   "defaultModel": "glm-5.3-flash",
   "packages": [
-    "npm:pi-open-tui",
     "npm:pi-trace-extension",
     "npm:@tavily/pi-extension",
-    "npm:pi-context-usage",
-    "npm:pi-subagents",
     "npm:@gotgenes/pi-permission-system",
     "npm:@ff-labs/pi-fff",
-    "npm:pi-simplify",
     "npm:pi-skillful",
     "npm:better-claude-code-ui",
     "npm:@juicesharp/rpiv-todo",
@@ -20,10 +16,9 @@
     "npm:@andrewjacop/pi-herdr"
   ],
   "enabledModels": [
-    "openai-codex/gpt-6-sol",
-    "openai-codex/gpt-6-astra",
     "xai/grok-4.7",
     "cannbot/deepseek-v4.1-flash",
-    "cannbot/deepseek-v4-pro"
+    "cannbot/deepseek-v4-pro",
+    "ccswitch-apikey-fan/claude-opus-5-5"
   ]
 }
