@@ -24,7 +24,11 @@
     "extensions/**/coverage/**",
     "extensions/**/logs/**",
     "extensions/**/temp/**",
-    "extensions/**/tmp/**"
+    "extensions/**/tmp/**",
+    "skills/diagnose-crash",
+    "skills/diagnose-crash/**",
+    "skills/omarchy",
+    "skills/omarchy/**"
   ],
   "delete": "tracked",
   "pullTimeoutMs": 10000,
