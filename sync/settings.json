@@ -8,17 +8,21 @@
     "npm:@gotgenes/pi-permission-system",
     "npm:@ff-labs/pi-fff",
     "npm:pi-skillful",
-    "npm:better-claude-code-ui",
     "npm:@juicesharp/rpiv-todo",
     "npm:@juicesharp/rpiv-i18n",
     "npm:pi-antigravity",
     "npm:@xyzensun/pi-sync",
-    "npm:@andrewjacop/pi-herdr"
+    "npm:@andrewjacop/pi-herdr",
+    "git:github.com/littlecabbage/better-claude-code-ui"
   ],
   "enabledModels": [
-    "xai/grok-4.7",
+    "rightapi/claude-opus-5-5",
     "cannbot/deepseek-v4.1-flash",
     "cannbot/deepseek-v4-pro",
-    "ccswitch-apikey-fan/claude-opus-5-5"
+    "cannbot/glm-5.3",
+    "cannbot/glm-5.3-flash",
+    "cannbot/qwen3.8-max",
+    "cannbot/qwen3.8-flash",
+    "apikeyfan/claude-opus-5-5"
   ]
 }
